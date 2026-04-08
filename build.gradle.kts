@@ -13,6 +13,11 @@ kotlin {
 
     val nativeTarget = if (org.jetbrains.kotlin.konan.target.HostManager.hostIsMingw) {
         mingwX64("native")
+            .apply {
+                compilations.configureEach {
+                    cinterops { "win32" }
+                }
+            }
     } else {
         linuxX64("native")
     }
@@ -29,6 +34,7 @@ kotlin {
         val nativeMain by getting {
             dependencies {
                 implementation(kotlin("stdlib"))
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
             }
         }
 
